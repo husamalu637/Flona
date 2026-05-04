@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صدى الطفولة | حلقات فلونا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #0f141e;
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+        header {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            margin-bottom: 30px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+            gap: 12px;
+            width: 95%;
+            max-width: 800px;
+            padding: 10px;
+        }
+        .episode-btn {
+            background-color: #1a2233;
+            color: white;
+            cursor: pointer;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+        }
+        .episode-btn:hover {
+            background-color: #00d2ff;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>مسلسل فلونا</h1>
+    <p>اختر رقم الحلقة للمشاهدة</p>
+</header>
+
+<div class="container" id="episodesGrid">
+    </div>
+
+<script>
+    // الرابط الإعلاني الخاص بك
+    const adLink = "https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a";
+    
+    const episodeIds = [
+        "2027","2028","2029","2030","2031","2032","2033","2034","2035","2036",
+        "2037","2038","2039","2040","2041","2042","2043","2044","2045","2046",
+        "2047","2048","2049","2050","2051","2052","2053","2054","2055","2056",
+        "2057","2058","2059","2060","2061","2062","2063","2064","2065","2066",
+        "2067","2068","2069","2070","2071","2072","2073","2074","2075","2076"
+    ];
+
+    const grid = document.getElementById('episodesGrid');
+
+    episodeIds.forEach((id, index) => {
+        const btn = document.createElement('div');
+        btn.className = 'episode-btn';
+        btn.innerText = index + 1;
+        
+        btn.onclick = function() {
+            // فتح الإعلان في نافذة جديدة
+            const adWindow = window.open(adLink, '_blank');
+            
+            // التحقق إذا تم حظر النافذة المنبثقة، نفتح الإعلان في نفس الصفحة كبديل
+            if (!adWindow || adWindow.closed || typeof adWindow.closed == 'undefined') {
+                alert("يرجى السماح بالنوافذ المنبثقة لمشاهدة الحلقة");
+                window.location.href = adLink;
+            } else {
+                // إذا فتح الإعلان بنجاح، نفتح الحلقة في الصفحة الحالية
+                window.location.href = `https://cartoony.net/watch/228/${id}`;
+            }
+        };
+        
+        grid.appendChild(btn);
+    });
+</script>
+
+</body>
+</html>
