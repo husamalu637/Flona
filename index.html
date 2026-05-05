@@ -3,99 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صدى الطفولة | حلقات فلونا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+    <title>صدى الطفولة | فلونة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: #0f141e;
-            color: #ffffff;
-            font-family: 'Cairo', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 50px;
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --bg: #0b0f19;
+            --card: #161e2e;
+            --text: #ffffff;
+            --accent: #ff9800;
         }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Cairo', sans-serif;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
         header {
             width: 100%;
-            padding: 20px 0;
-            text-align: center;
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 40px 0; text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        header h1 { margin: 0; font-size: 2.2rem; font-weight: 900; }
+
+        .main-container {
+            max-width: 900px; width: 95%; margin: 30px auto;
+        }
+
+        .video-wrapper {
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden; 
+            border: 3px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.2);
             margin-bottom: 30px;
+            display: none;
+            position: relative;
         }
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
-            gap: 12px;
-            width: 95%;
-            max-width: 800px;
-            padding: 10px;
+
+        .responsive-iframe {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
         }
-        .episode-btn {
-            background-color: #1a2233;
-            color: white;
-            cursor: pointer;
-            height: 65px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
+
+        .responsive-iframe iframe {
+            position: absolute;
+            /* القياس المعتمد لضبط المشغل لأسفل */
+            top: -155px; 
+            left: 0;
+            width: 100%;
+            height: calc(100% + 155px); 
+            border: 0;
+        }
+
+        .video-footer {
+            padding: 15px;
+            background: var(--card);
+            text-align: center;
             font-weight: bold;
-            font-size: 1.2rem;
+            color: var(--primary);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 12px;
+        }
+
+        .ep-btn {
+            background: #252f44;
+            color: white;
+            padding: 15px 0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
             border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
+            cursor: pointer;
+            transition: 0.3s ease;
         }
-        .episode-btn:hover {
-            background-color: #00d2ff;
-            color: #000;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
-        }
+
+        .ep-btn:hover { background: var(--primary); color: #000; }
+        .ep-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+        footer { margin: 40px 0; opacity: 0.5; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>مسلسل فلونا</h1>
-    <p>اختر رقم الحلقة للمشاهدة</p>
+    <h1>🎬 صدى الطفولة</h1>
+    <p>مغامرات فلونة - مشاهدة ممتعة</p>
 </header>
 
-<div class="container" id="episodesGrid">
+<div class="main-container">
+    <div id="videoContainer" class="video-wrapper">
+        <div class="responsive-iframe">
+            <iframe id="mainIframe" src="" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+        </div>
+        <div id="epTitle" class="video-footer">اختر حلقة للبدء</div>
     </div>
 
+    <div class="episodes-container" style="background: var(--card); padding: 25px; border-radius: 20px;">
+        <div class="episodes-grid" id="buttonsGrid"></div>
+    </div>
+</div>
+
+<footer>
+    <p>جميع الحقوق محفوظة - صدى الطفولة &copy; 2026</p>
+</footer>
+
 <script>
-    // الرابط الإعلاني الخاص بك
-    const adLink = "https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a";
-    
-    const episodeIds = [
-        "2027","2028","2029","2030","2031","2032","2033","2034","2035","2036",
-        "2037","2038","2039","2040","2041","2042","2043","2044","2045","2046",
-        "2047","2048","2049","2050","2051","2052","2053","2054","2055","2056",
-        "2057","2058","2059","2060","2061","2062","2063","2064","2065","2066",
-        "2067","2068","2069","2070","2071","2072","2073","2074","2075","2076"
-    ];
+    // روابط فلونة تبدأ من 2027 بناءً على الرابط المزود
+    const baseId = 2027;
+    const totalEpisodes = 50; 
+    const episodeLinks = [];
 
-    const grid = document.getElementById('episodesGrid');
+    for (let i = 0; i < totalEpisodes; i++) {
+        episodeLinks.push(`https://cartoony.net/watch/228/${baseId + i}`);
+    }
 
-    episodeIds.forEach((id, index) => {
-        const btn = document.createElement('div');
-        btn.className = 'episode-btn';
+    const grid = document.getElementById('buttonsGrid');
+    const container = document.getElementById('videoContainer');
+    const iframe = document.getElementById('mainIframe');
+    const titleDisp = document.getElementById('epTitle');
+
+    episodeLinks.forEach((link, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'ep-btn';
         btn.innerText = index + 1;
-        
         btn.onclick = function() {
-            // فتح الإعلان في نافذة جديدة
-            const adWindow = window.open(adLink, '_blank');
-            
-            // التحقق إذا تم حظر النافذة المنبثقة، نفتح الإعلان في نفس الصفحة كبديل
-            if (!adWindow || adWindow.closed || typeof adWindow.closed == 'undefined') {
-                alert("يرجى السماح بالنوافذ المنبثقة لمشاهدة الحلقة");
-                window.location.href = adLink;
-            } else {
-                // إذا فتح الإعلان بنجاح، نفتح الحلقة في الصفحة الحالية
-                window.location.href = `https://cartoony.net/watch/228/${id}`;
-            }
+            // رابط الإعلان الخاص بك
+            window.open('https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a', '_blank');
+            container.style.display = 'block';
+            iframe.src = link;
+            titleDisp.innerText = "أنت تشاهد الآن: فلونة - حلقة " + (index + 1);
+            document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
         };
-        
         grid.appendChild(btn);
     });
 </script>
