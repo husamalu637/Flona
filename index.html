@@ -7,42 +7,159 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #00d2ff; --accent: #ff9800; --bg: #0b0f19; --card: #161e2e; }
-        * { user-select: none; }
+        * { user-select: none; box-sizing: border-box; }
         body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; position: relative; }
-        header { width: 100%; background: linear-gradient(135deg, #00d2ff, #3a7bd5); padding: 40px 0; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .banner-top, .banner-bottom { width: 100%; text-align: center; background: #0a0e15; padding: 20px 0; margin: 0 auto; display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow-x: auto; }
-        .banner-top { max-width: 900px; margin-top: 20px; margin-bottom: 10px; }
-        .banner-bottom { max-width: 900px; margin-top: 30px; margin-bottom: 20px; }
+        
+        header { width: 100%; background: linear-gradient(135deg, #00d2ff, #3a7bd5); padding: 15px 0; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.5); color: #000; }
+        header h1 { margin: 5px 0; font-size: 1.5rem; }
+        header p { margin: 0; font-size: 0.9rem; }
+        
+        .banner-top, .banner-bottom { width: 100%; text-align: center; background: #0a0e15; padding: 15px 0; margin: 0 auto; display: flex; justify-content: center; align-items: center; border-radius: 12px; overflow-x: auto; }
+        .banner-top { max-width: 900px; margin-top: 10px; margin-bottom: 5px; }
+        .banner-bottom { max-width: 900px; margin-top: 20px; margin-bottom: 20px; }
+        
         .main-container { max-width: 900px; width: 95%; margin: 0 auto; text-align: center; }
-        .video-wrapper-outer { position: relative; z-index: 1; }
-        .video-display-area { background: #000; border-radius: 20px; overflow: hidden; border: 3px solid var(--primary); box-shadow: 0 0 30px rgba(0, 210, 255, 0.2); margin-bottom: 30px; display: none; position: relative; }
+        
+        .back-home-btn { background: #252f44; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer; margin: 10px 0; transition: 0.3s; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; font-size: 0.9rem; }
+        .back-home-btn:hover { background: var(--primary); color: #000; }
+
+        .video-wrapper-outer { position: relative; z-index: 1; width: 100%; }
+        .video-display-area { background: #000; border-radius: 15px; overflow: hidden; border: 3px solid var(--primary); box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); margin-bottom: 20px; display: none; position: relative; }
         .responsive-iframe { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
-        .responsive-iframe iframe { position: absolute; top: -160px; left: 0; width: 100%; height: calc(100% + 160px); border: 0; overflow: hidden; pointer-events: auto; }
-        .episodes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 15px; background: var(--card); padding: 25px; border-radius: 20px; max-height: 600px; overflow-y: auto; }
-        .ep-btn { background: #252f44; color: white; border: 2px solid transparent; padding: 15px 0; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .ep-btn:hover { background: var(--primary); transform: scale(1.1); border-color: white; }
-        .ep-btn.active { background: var(--accent); color: black; box-shadow: 0 0 15px var(--accent); }
-        .info-text { margin-top: 20px; color: var(--primary); }
-        footer { margin-top: 50px; padding: 20px; opacity: 0.4; text-align: center; }
-        @media (max-width: 600px) { .episodes-grid { grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 10px; padding: 15px; } .ep-btn { padding: 10px 0; font-size: 1rem; } }
+        .responsive-iframe iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; overflow: hidden; pointer-events: auto; }
+        
+        .section-title { font-size: 1.2rem; margin: 15px 0 10px 0; color: var(--primary); }
+        .episodes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 10px; background: var(--card); padding: 15px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .ep-btn { background: #252f44; color: white; border: 2px solid transparent; padding: 12px 0; border-radius: 10px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-family: 'Cairo', sans-serif; }
+        .ep-btn:hover { background: var(--primary); transform: scale(1.05); border-color: white; color: #000; }
+        .ep-btn.active { background: var(--accent); color: black; box-shadow: 0 0 12px var(--accent); }
+
+        .info-text { margin-top: 15px; color: var(--primary); font-size: 0.85rem; }
+        footer { margin-top: 30px; padding: 15px; opacity: 0.4; text-align: center; font-size: 0.8rem; }
+        
+        @media (max-width: 600px) { 
+            .episodes-grid { grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); gap: 8px; padding: 10px; } 
+            .ep-btn { padding: 10px 0; font-size: 0.9rem; } 
+        }
     </style>
 </head>
 <body>
-<header><h1>🎬 صدى الطفولة</h1><p>اختر رقم الحلقة وابدأ المشاهدة فوراً (50 حلقة)</p></header>
-<div class="banner-top"><script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script><script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script></div>
-<div class="main-container"><div class="video-wrapper-outer"><div id="videoPlayer" class="video-display-area"><div class="responsive-iframe"><iframe id="mainIframe" src="" allowfullscreen scrolling="no"></iframe></div><div id="episodeTitle" style="padding: 10px; background: var(--card); font-weight: bold;"></div></div></div><h2>اضغط على رقم الحلقة للمشاهدة:</h2><div class="episodes-grid" id="buttonsGrid"></div><p class="info-text">جميع حلقات فلونة (50 حلقة) متوفرة الآن بجودة عالية</p></div>
-<div class="banner-bottom"><script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script><script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script></div>
+
+<header>
+    <h1>🌴 مسلسل فلونة</h1>
+    <p>50 حلقة متوفرة بجودة عالية</p>
+</header>
+
+<!-- إعلان البنر العلوي -->
+<div class="banner-top">
+    <script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
+    <script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script>
+</div>
+
+<div class="main-container">
+    <a href="index.html" class="back-home-btn">⬅ الرئيسية</a>
+
+    <!-- مشغل الفيديو يظهر هنا فور اختيار الحلقة -->
+    <div class="video-wrapper-outer">
+        <div id="videoPlayer" class="video-display-area">
+            <div class="responsive-iframe"><iframe id="mainIframe" src="" allowfullscreen allow="autoplay; encrypted-media" scrolling="no" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe></div>
+            <div id="episodeTitle" style="padding: 8px; background: var(--card); font-weight: bold; color: var(--primary); font-size: 0.95rem;"></div>
+        </div>
+    </div>
+
+    <div class="section-title">اختر رقم الحلقة للمشاهدة المباشرة:</div>
+    <div class="episodes-grid" id="buttonsGrid"></div>
+    <p class="info-text">تم تصفية القائمة وتوفير الحلقات الشغالة لمسلسل فلونة بدقة Full HD</p>
+</div>
+
+<!-- إعلان البنر السفلي -->
+<div class="banner-bottom">
+    <script> atOptions = { 'key' : 'b8ba5b25ff25e41ea44c2df3a1b05378', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} }; </script>
+    <script src="https://www.highperformanceformat.com/b8ba5b25ff25e41ea44c2df3a1b05378/invoke.js"></script>
+</div>
+
 <footer>جميع الحقوق محفوظة - صدى الطفولة &copy; 2026</footer>
+
 <script>
-    const adLink = "https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a";
-    const totalEpisodes = 50;
-    const episodeLinks = [];
-    for (let i = 0; i < totalEpisodes; i++) { episodeLinks.push(`https://cartoony.net/watch/228/${2027 + i}`); }
-    const grid = document.getElementById('buttonsGrid'); const player = document.getElementById('videoPlayer'); const iframe = document.getElementById('mainIframe'); const titleDisp = document.getElementById('episodeTitle');
-    let scrollPosition = 0;
-    function lockPage() { scrollPosition = window.scrollY; document.body.style.position = 'fixed'; document.body.style.top = `-${scrollPosition}px`; document.body.style.width = '100%'; }
-    function unlockPage() { document.body.style.position = ''; document.body.style.top = ''; document.body.style.width = ''; window.scrollTo(0, scrollPosition); }
-    for(let i=0; i<totalEpisodes; i++){ const btn = document.createElement('button'); btn.className = 'ep-btn'; btn.innerText = i+1; btn.onclick = (function(link, idx){ return function(){ window.open(adLink, '_blank'); lockPage(); player.style.display = 'block'; iframe.src = link; titleDisp.innerText = "أنت تشاهد الآن: فلونة - الحلقة " + (idx+1); document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active')); this.classList.add('active'); setTimeout(() => { unlockPage(); }, 500); }; })(episodeLinks[i], i); grid.appendChild(btn); }
+    const popupAdLink = "https://www.profitablecpmratenetwork.com/e41dj2h87?key=bef514b5ca3fa945e7a3b60e4a9ef21a";
+
+    const workingEpisodes = [
+        { epNum: 1, url: "https://www.youtube.com/embed/1mNOnIaEMnY" },
+        { epNum: 2, url: "https://www.youtube.com/embed/5g9CaXL4geI" },
+        { epNum: 3, url: "https://www.youtube.com/embed/o3tYObogNP8" },
+        { epNum: 4, url: "https://www.youtube.com/embed/-4lxQk8hwsE" },
+        { epNum: 5, url: "https://www.youtube.com/embed/M3FtJW8tKO8" },
+        { epNum: 6, url: "https://www.youtube.com/embed/JCO0nOtOmQM" },
+        { epNum: 7, url: "https://www.youtube.com/embed/ouka_hQxjcY" },
+        { epNum: 8, url: "https://www.youtube.com/embed/EmAMZKfg9-0" },
+        { epNum: 9, url: "https://www.youtube.com/embed/C4402y5m7sY" },
+        { epNum: 10, url: "https://www.youtube.com/embed/ggxhVH4St-I" },
+        { epNum: 11, url: "https://www.youtube.com/embed/FN7NR0b_Gmg" },
+        { epNum: 12, url: "https://www.youtube.com/embed/0M8GeH-JNUw" },
+        { epNum: 13, url: "https://www.youtube.com/embed/usz8r66otE8" },
+        { epNum: 14, url: "https://www.youtube.com/embed/zcV5mdHV5AI" },
+        { epNum: 15, url: "https://www.youtube.com/embed/WOOo6EW2KL4" },
+        { epNum: 16, url: "https://www.youtube.com/embed/G2n8g67c-uw" },
+        { epNum: 17, url: "https://www.youtube.com/embed/KqtZsCfr8lY" },
+        { epNum: 18, url: "https://www.youtube.com/embed/eMW0KpLpXoM" },
+        { epNum: 19, url: "https://www.youtube.com/embed/IhxTd6Fa5ac" },
+        { epNum: 20, url: "https://www.youtube.com/embed/-WeTXLEtn5w" },
+        { epNum: 21, url: "https://www.youtube.com/embed/CdXaIXUXIJ8" },
+        { epNum: 22, url: "https://www.youtube.com/embed/vkVNxk4hx_w" },
+        { epNum: 23, url: "https://www.youtube.com/embed/kKDmFRO5ejc" },
+        { epNum: 24, url: "https://www.youtube.com/embed/JtRS7vXPUzw" },
+        { epNum: 25, url: "https://www.youtube.com/embed/IgIb4iqPIVg" },
+        { epNum: 26, url: "https://www.youtube.com/embed/M8FMxcbXDwc" },
+        { epNum: 27, url: "https://www.youtube.com/embed/5F_BMii7L7g" },
+        { epNum: 28, url: "https://www.youtube.com/embed/0m113Kns8eg" },
+        { epNum: 29, url: "https://www.youtube.com/embed/uWDqwUbKQc4" },
+        { epNum: 30, url: "https://www.youtube.com/embed/RSi_y9am6D0" },
+        { epNum: 31, url: "https://www.youtube.com/embed/auMINWj8Wa8" },
+        { epNum: 32, url: "https://www.youtube.com/embed/iDzf_49409Y" },
+        { epNum: 33, url: "https://www.youtube.com/embed/L3ctEEs4Edg" },
+        { epNum: 34, url: "https://www.youtube.com/embed/BqelrcxxONI" },
+        { epNum: 35, url: "https://www.youtube.com/embed/9kqROOxok0c" },
+        { epNum: 36, url: "https://www.youtube.com/embed/c5c4rZT2mK8" },
+        { epNum: 37, url: "https://www.youtube.com/embed/8NBz2kCtNcU" },
+        { epNum: 38, url: "https://www.youtube.com/embed/lSNCOWsCPpI" },
+        { epNum: 39, url: "https://www.youtube.com/embed/nBK79_71_HA" },
+        { epNum: 40, url: "https://www.youtube.com/embed/Ww_A2lYSyyA" },
+        { epNum: 41, url: "https://www.youtube.com/embed/d7HYFO90_IE" },
+        { epNum: 42, url: "https://www.youtube.com/embed/jFCGIXOHxp0" },
+        { epNum: 43, url: "https://www.youtube.com/embed/2lJHk72Xh68" },
+        { epNum: 44, url: "https://www.youtube.com/embed/SSDSXtM_fC4" },
+        { epNum: 45, url: "https://www.youtube.com/embed/Mel-43DHVSU" },
+        { epNum: 46, url: "https://www.youtube.com/embed/z8gqstvOkKY" },
+        { epNum: 47, url: "https://www.youtube.com/embed/dEg4KXloXyg" },
+        { epNum: 48, url: "https://www.youtube.com/embed/bJZjKdEZsl8" },
+        { epNum: 49, url: "https://www.youtube.com/embed/y6ckdkyPAvY" },
+        { epNum: 50, url: "https://www.youtube.com/embed/yXP6QxlK6ws" }
+    ];
+
+    const grid = document.getElementById('buttonsGrid'); 
+    const player = document.getElementById('videoPlayer'); 
+    const iframe = document.getElementById('mainIframe'); 
+    const titleDisp = document.getElementById('episodeTitle');
+
+    workingEpisodes.forEach((item) => { 
+        const btn = document.createElement('button'); 
+        btn.className = 'ep-btn'; 
+        btn.innerText = item.epNum; 
+        
+        btn.onclick = function() { 
+            window.open(popupAdLink, '_blank');
+            
+            player.style.display = 'block'; 
+            iframe.src = item.url; 
+            titleDisp.innerText = "أنت تشاهد الآن: فلونة - الحلقة " + item.epNum; 
+            
+            document.querySelectorAll('.ep-btn').forEach(b => b.classList.remove('active')); 
+            btn.classList.add('active'); 
+            
+            player.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }; 
+        grid.appendChild(btn); 
+    });
 </script>
 </body>
 </html>
